@@ -1,0 +1,10 @@
+name: GambitRemastered
+version: '${project.version}'
+main: me.opd.gambitremastered.GambitRemastered
+api-version: '1.21'
+commands:
+  gteam:
+  start:
+  savelocation:
+  abort:
+  token:

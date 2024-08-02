@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<!DOCTYPE xml>
+<project name="GambitRemastered" default="Build">
+
+    <target name="Build">
+        <jar jarfile="C:/Users/Ran The Master/Desktop/Gambit Server/plugins/${ant.project.name}.jar" basedir="./target/classes/" includes="**/*">
+
+        </jar>
+
+    </target>
+
+</project>
