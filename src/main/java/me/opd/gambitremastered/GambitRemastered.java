@@ -3,6 +3,7 @@ package me.opd.gambitremastered;
 import me.opd.gambitremastered.commands.*;
 import me.opd.gambitremastered.game.GameSession;
 import me.opd.gambitremastered.game.mechanics.*;
+import me.opd.gambitremastered.prizes.PrizeCrateInteractListener;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -31,6 +32,7 @@ public final class GambitRemastered extends JavaPlugin {
         Bukkit.getServer().getPluginManager().registerEvents(new OrbPickUpListener(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new PlayerRespawnListener(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new MobDropOrbListener(), this);
+         Bukkit.getServer().getPluginManager().registerEvents(new PrizeCrateInteractListener(), this);
 
 
         gameSession = new GameSession();
