@@ -22,4 +22,5 @@ public class ArenaManager {
         }
     }
     //TODO add end portal opening
+    //TODO make list of frozen mobs
 }

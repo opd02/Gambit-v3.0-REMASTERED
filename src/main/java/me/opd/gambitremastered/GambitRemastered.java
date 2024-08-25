@@ -4,6 +4,7 @@ import me.opd.gambitremastered.commands.*;
 import me.opd.gambitremastered.game.GameSession;
 import me.opd.gambitremastered.game.mechanics.*;
 import me.opd.gambitremastered.prizes.PrizeCrateInteractListener;
+import me.opd.gambitremastered.prizes.PrizeManager;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -13,6 +14,7 @@ public final class GambitRemastered extends JavaPlugin {
     public static GameSession gameSession;
     public static FileConfiguration config;
     public static GambitRemastered instance;
+    public static PrizeManager prizeManager;
 
     @Override
     public void onEnable() {
@@ -32,12 +34,15 @@ public final class GambitRemastered extends JavaPlugin {
         Bukkit.getServer().getPluginManager().registerEvents(new OrbPickUpListener(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new PlayerRespawnListener(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new MobDropOrbListener(), this);
-         Bukkit.getServer().getPluginManager().registerEvents(new PrizeCrateInteractListener(), this);
+        Bukkit.getServer().getPluginManager().registerEvents(new PrizeCrateInteractListener(), this);
+        Bukkit.getServer().getPluginManager().registerEvents(new RemoveFireworkDamageListener(), this);
 
 
         gameSession = new GameSession();
 
         gameSession.getArenaManager().syncConfigLocation();
+
+        prizeManager = new PrizeManager();
 
     }
 

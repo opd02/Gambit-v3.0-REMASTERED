@@ -20,7 +20,11 @@ public class TokenCommand implements CommandExecutor {
             }
 
             Player player = (Player) sender;
-            player.getInventory().addItem(ItemUtil.getToken());
+            int amount = 1;
+            if (args.length != 0) {
+                amount = Integer.parseInt(args[0]);
+            }
+            player.getInventory().addItem(ItemUtil.getToken(amount));
         }
         return false;
     }

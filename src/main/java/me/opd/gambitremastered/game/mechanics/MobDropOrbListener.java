@@ -22,7 +22,7 @@ public class MobDropOrbListener implements Listener {
             en.getWorld().dropItemNaturally(l, item);
 
         } else if (e.getEntityType().equals(EntityType.RAVAGER) || e.getEntityType().equals(EntityType.EVOKER)) {
-            item = ItemUtil.getToken();
+            item = ItemUtil.getToken(1);
             en.getWorld().dropItemNaturally(l, item);
         }
     }
