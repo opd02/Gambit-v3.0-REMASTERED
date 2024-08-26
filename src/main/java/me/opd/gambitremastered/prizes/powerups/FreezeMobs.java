@@ -5,6 +5,7 @@ import me.opd.gambitremastered.game.managers.ArenaManager;
 import me.opd.gambitremastered.prizes.Prize;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -24,7 +25,7 @@ public class FreezeMobs extends Prize implements Listener {
         player.getWorld().playSound(player.getLocation(), Sound.BLOCK_GLASS_BREAK, 10, 1);
 
         for (Entity en : player.getNearbyEntities(15, 15, 15)) {
-            if ((en instanceof LivingEntity) && !(en instanceof Player)) {
+            if ((en instanceof LivingEntity) && !(en instanceof Player) && !(en instanceof ArmorStand)) {
                 ArenaManager.frozenEntities.add(en);
                 LivingEntity le = (LivingEntity) en;
                 le.getEquipment().setHelmet(new ItemStack(Material.ICE, 1));

@@ -50,4 +50,8 @@ public class GameSession {
     public ArenaManager getArenaManager() {
         return arenaManager;
     }
+
+    public void setAllowRespawning(boolean allowRespawning) {
+        this.allowRespawning = allowRespawning;
+    }
 }

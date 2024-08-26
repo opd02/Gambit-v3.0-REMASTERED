@@ -10,6 +10,9 @@ public enum TeamType {
     SPECTATE;
 
     public static TeamType getTeam(UUID uuid) {
+        if (!GambitRemastered.gameSession.getPlayerManager().getPlayers().containsKey(uuid)) {
+            GambitRemastered.gameSession.getPlayerManager().getPlayers().put(uuid, TeamType.SPECTATE);
+        }
         return GambitRemastered.gameSession.getPlayerManager().getPlayers().get(uuid);
     }
 }

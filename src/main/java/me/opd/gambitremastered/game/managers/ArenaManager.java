@@ -2,11 +2,10 @@ package me.opd.gambitremastered.game.managers;
 
 import me.opd.gambitremastered.GambitRemastered;
 import me.opd.gambitremastered.game.GameState;
+import me.opd.gambitremastered.game.TeamType;
 import me.opd.gambitremastered.util.ChatUtil;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Sound;
+import org.bukkit.*;
+import org.bukkit.block.EndGateway;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
@@ -23,6 +22,9 @@ public class ArenaManager {
     int i;
 
     public ArenaManager() {
+        Bukkit.getWorlds().getFirst().setGameRule(GameRule.MOB_GRIEFING, false);
+        Bukkit.getWorlds().getFirst().setGameRule(GameRule.KEEP_INVENTORY, true);
+        Bukkit.getWorlds().getFirst().setGameRule(GameRule.DO_IMMEDIATE_RESPAWN, true);
     }
 
     public void syncConfigLocation() {
@@ -38,7 +40,7 @@ public class ArenaManager {
     public void startPregameCountdown() {
         i = 10;
 
-        task = Bukkit.getScheduler().runTaskTimer(GambitRemastered.instance, (Runnable) () -> {
+        task = Bukkit.getScheduler().runTaskTimer(GambitRemastered.instance, () -> {
             if (i != 0) {
                 Bukkit.getServer().broadcastMessage(ChatUtil.prefix + ChatColor.YELLOW + ChatColor.BOLD + "The game will begin in " + i + "...");
                 if (i == 1 || i == 2 || i == 3) {
@@ -59,5 +61,24 @@ public class ArenaManager {
             }
         }, 20, 20);
     }
-    //TODO add end portal opening
+
+    public void openEndPortal(TeamType type) {
+        PlayerManager.playerSoundForPlayers(Sound.BLOCK_END_PORTAL_FRAME_FILL, 1);
+
+        Location location = ArenaManager.locations.get(type == TeamType.RED ? "RedPortal" : "BluePortal");
+        location.getBlock().setType(Material.END_GATEWAY);
+        double z = location.getZ();
+        double y = location.getY();
+
+        for (double i = z; i >= z - 5; i--) {
+            for (double j = y; j <= y + 2; j++) {
+                Location portal = new Location(location.getWorld(), location.getX(), j, i);
+                portal.getBlock().setType(Material.END_GATEWAY);
+                EndGateway gate = (EndGateway) portal.getBlock().getState();
+                gate.setExitLocation(type == TeamType.RED ? ArenaManager.locations.get("BlueSpawn") : ArenaManager.locations.get("RedPortal"));
+                gate.setExactTeleport(true);
+                gate.update();
+            }
+        }
+    }
 }

@@ -22,6 +22,7 @@ public class TokenCommand implements CommandExecutor {
             }
 
             Player player = (Player) sender;
+
             int amount = 1;
             if (args.length != 0) {
                 if (args[0].equalsIgnoreCase("prizes")) {

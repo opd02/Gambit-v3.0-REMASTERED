@@ -48,7 +48,7 @@ public class PrizeManager {
         possiblePrizes.add(new NotchApple(ItemUtil.getItem("&dEnchanted Golden Apple", Material.ENCHANTED_GOLDEN_APPLE, 1,
                 null, false)));
 
-        possiblePrizes.add(new TeamSlowDown(ItemUtil.NBTStamp(ItemUtil.getItem("&2&lTeam Slow Down", Material.TURTLE_SCUTE, 2,
+        possiblePrizes.add(new TeamSlowDown(ItemUtil.NBTStamp(ItemUtil.getItem("&2&lTeam Slow Down", Material.TURTLE_SCUTE, 1,
                         new ArrayList<>(List.of("&7Drop this item to give your opponents", "&7a massive reduction in speed!")), false), "Prize",
                 "TeamSlowDown")));
     }

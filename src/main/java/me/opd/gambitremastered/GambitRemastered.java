@@ -38,7 +38,7 @@ public final class GambitRemastered extends JavaPlugin {
         Bukkit.getServer().getPluginManager().registerEvents(new ItemDropProtectionListener(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new OrbPickUpListener(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new PlayerRespawnListener(), this);
-        Bukkit.getServer().getPluginManager().registerEvents(new MobDropOrbListener(), this);
+        Bukkit.getServer().getPluginManager().registerEvents(new MobDropDeathListener(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new OrbBankListener(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new PrizeCrateInteractListener(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new RemoveFireworkDamageListener(), this);

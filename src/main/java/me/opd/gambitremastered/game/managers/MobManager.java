@@ -3,11 +3,11 @@ package me.opd.gambitremastered.game.managers;
 import me.opd.gambitremastered.GambitRemastered;
 import me.opd.gambitremastered.game.GameState;
 import me.opd.gambitremastered.game.TeamType;
+import me.opd.gambitremastered.util.ChatUtil;
 import org.bukkit.*;
-import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Pillager;
-import org.bukkit.entity.Zombie;
+import org.bukkit.entity.*;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.ArrayList;
@@ -93,7 +93,39 @@ public class MobManager {
     }
 
     public void spawnBoss(TeamType teamType, int bossLevel) {
-        //TODO implement
+        Random random = new Random();
+        Location location = ((teamType == TeamType.RED) ? redMobSpawnLocations.get(random.nextInt(redMobSpawnLocations.size())) :
+                blueMobSpawnLocations.get(random.nextInt(blueMobSpawnLocations.size())));
+        switch (bossLevel) {
+            case 1 -> {
+                Vindicator vindicator = location.getWorld().spawn(location, Vindicator.class);
+                vindicator.setCustomName(ChatUtil.format("&dBOSS"));
+                vindicator.setCustomNameVisible(true);
+                vindicator.setMaxHealth(200);
+                vindicator.setHealth(200);
+                vindicator.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 600, 1));
+                vindicator.setRemoveWhenFarAway(false);
+            }
+            case 2 -> {
+                Ravager ravager = location.getWorld().spawn(location, Ravager.class);
+                ravager.setCustomName(ChatUtil.format("&dBOSS"));
+                ravager.setCustomNameVisible(true);
+                ravager.setMaxHealth(300);
+                ravager.setHealth(300);
+                ravager.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 600, 1));
+                ravager.setRemoveWhenFarAway(false);
+            }
+            case 3 -> {
+                Wither wither = location.getWorld().spawn(location, Wither.class);
+                wither.setCustomName(ChatUtil.format("&dFINAL BOSS"));
+                wither.setCustomNameVisible(true);
+                wither.setMaxHealth(450);
+                wither.setHealth(450);
+                wither.setRemoveWhenFarAway(false);
+            }
+            default -> {
+            }
+        }
     }
 
     public void setAllowRedMobSpawning(boolean allowRedMobSpawning) {

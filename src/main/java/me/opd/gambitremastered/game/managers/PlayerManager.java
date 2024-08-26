@@ -4,10 +4,7 @@ import me.opd.gambitremastered.GambitRemastered;
 import me.opd.gambitremastered.game.TeamType;
 import me.opd.gambitremastered.util.ChatUtil;
 import me.opd.gambitremastered.util.ItemUtil;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.PlayerInventory;
@@ -84,8 +81,12 @@ public class PlayerManager {
             switch (TeamType.getTeam(uuid)) {
                 case BLUE -> player.teleport(ArenaManager.locations.get("BlueSpawn"));
                 case RED -> player.teleport(ArenaManager.locations.get("RedSpawn"));
-                case SPECTATE -> player.teleport(ArenaManager.locations.get("SpectateSpawn"));
+                case SPECTATE -> {
+                    player.teleport(ArenaManager.locations.get("SpectateSpawn"));
+                    player.setGameMode(GameMode.SPECTATOR);
+                }
             }
+            player.setRespawnLocation(player.getLocation());
             GambitRemastered.worldBorderApi.setBorder(player, 10, player.getLocation());
         }
         playerSoundForPlayers(Sound.ENTITY_ENDER_DRAGON_FLAP, 0.5f);

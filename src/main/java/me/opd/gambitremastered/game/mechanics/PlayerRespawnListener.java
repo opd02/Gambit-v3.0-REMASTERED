@@ -5,6 +5,7 @@ import me.opd.gambitremastered.util.ChatUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -20,6 +21,7 @@ public class PlayerRespawnListener implements Listener {
         if (!GambitRemastered.gameSession.isAllowRespawning()) {
             e.getPlayer().setGameMode(GameMode.SPECTATOR);
             e.getPlayer().sendMessage(ChatUtil.prefix + ChatUtil.format("&c&lYou have lost the game!"));
+            e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.ENTITY_VILLAGER_NO, 0.5f, 0.5f);
             e.getPlayer().getInventory().clear();
             return;
         }
