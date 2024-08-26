@@ -9,19 +9,18 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class SpeedBoost extends Prize {
-
-    public SpeedBoost(ItemStack item) {
+public class TeamSlowDown extends Prize {
+    public TeamSlowDown(ItemStack item) {
         super(item);
     }
 
     @Override
     public void onDrop(Player player) {
         announceDrop(player);
-        PlayerManager.playerSoundForPlayers(Sound.ENTITY_ENDER_DRAGON_FLAP, 2f);
+        PlayerManager.playerSoundForPlayers(Sound.ENTITY_SLIME_JUMP, 0.5f);
 
-        for (Player p : GambitRemastered.gameSession.getPlayerManager().getTeamPlayers(player)) {
-            p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 300, 1, false));
+        for (Player p : GambitRemastered.gameSession.getPlayerManager().getOppositeTeamPlayers(player)) {
+            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 200, 3, false));
         }
     }
 }

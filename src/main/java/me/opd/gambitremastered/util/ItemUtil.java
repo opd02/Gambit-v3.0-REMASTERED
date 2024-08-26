@@ -45,8 +45,12 @@ public class ItemUtil {
         meta.setUnbreakable(unbreakable);
         meta.setItemName(ChatUtil.format(name));
 
-        if (lore != null)
+        if (lore != null) {
+            for (String s : lore) {
+                lore.set(lore.indexOf(s), ChatUtil.format(s));
+            }
             meta.setLore(lore);
+        }
 
         for (Enchantment e : enchantment) {
             meta.addEnchant(e, 1, true);
@@ -85,8 +89,8 @@ public class ItemUtil {
         return item;
     }
 
-    public static ItemStack getToken() {
-        ItemStack token = ItemUtil.getItem("&l&6Spin Token", Material.SUNFLOWER, 1,
+    public static ItemStack getToken(int amount) {
+        ItemStack token = ItemUtil.getItem("&l&6Spin Token", Material.SUNFLOWER, amount,
                 new ArrayList<>(List.of(ChatColor.GRAY + "Right Click on the ender chest", ChatColor.GRAY + "to get a prize!")), false);
 
         ItemUtil.NBTStamp(token, "Prize", "Token");

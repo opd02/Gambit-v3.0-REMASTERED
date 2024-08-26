@@ -1,5 +1,7 @@
 package me.opd.gambitremastered.commands;
 
+import me.opd.gambitremastered.GambitRemastered;
+import me.opd.gambitremastered.prizes.Prize;
 import me.opd.gambitremastered.util.ChatUtil;
 import me.opd.gambitremastered.util.ItemUtil;
 import org.bukkit.command.Command;
@@ -20,7 +22,18 @@ public class TokenCommand implements CommandExecutor {
             }
 
             Player player = (Player) sender;
-            player.getInventory().addItem(ItemUtil.getToken());
+
+            int amount = 1;
+            if (args.length != 0) {
+                if (args[0].equalsIgnoreCase("prizes")) {
+                    for (Prize prize : GambitRemastered.prizeManager.getPossiblePrizes()) {
+                        player.getInventory().addItem(prize.getItem());
+                    }
+                    return true;
+                }
+                amount = Integer.parseInt(args[0]);
+            }
+            player.getInventory().addItem(ItemUtil.getToken(amount));
         }
         return false;
     }
