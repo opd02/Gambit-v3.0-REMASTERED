@@ -6,7 +6,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public abstract class Prize {
-    //TODO Give each prize their drop functionality
     private final ItemStack item;
 
     public Prize(ItemStack item) {
@@ -17,11 +16,13 @@ public abstract class Prize {
 
     protected void announceDrop(Player player) {
         Bukkit.getServer().broadcastMessage(ChatUtil.prefix + ChatUtil.format(player.getDisplayName() +
-                " has activated " + (item.getItemMeta().getItemName().toLowerCase().charAt(0) == 'a' ? "a" : "an")
-                + item.getItemMeta().getDisplayName() + " &r&7power-up!"));
+                " has activated " + ((item.getItemMeta().getItemName().toLowerCase().charAt(4) == 'a' ||
+                item.getItemMeta().getItemName().toLowerCase().charAt(4) == 'i' ||
+                item.getItemMeta().getItemName().toLowerCase().charAt(2) == 'e') ? "an " : "a ")
+                + item.getItemMeta().getItemName() + " &r&7power-up!"));
     }
 
-    protected ItemStack getItem() {
+    public ItemStack getItem() {
         return item;
     }
 }

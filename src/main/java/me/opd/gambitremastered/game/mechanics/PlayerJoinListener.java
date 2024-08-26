@@ -2,6 +2,7 @@ package me.opd.gambitremastered.game.mechanics;
 
 import me.opd.gambitremastered.GambitRemastered;
 import me.opd.gambitremastered.game.GameState;
+import me.opd.gambitremastered.game.TeamType;
 import me.opd.gambitremastered.game.managers.ArenaManager;
 import me.opd.gambitremastered.util.ChatUtil;
 import org.bukkit.Sound;
@@ -28,6 +29,21 @@ public class PlayerJoinListener implements Listener {
             player.setSaturation(20);
 
             player.playSound(player.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1f, 1f);
+        } else {
+            TeamType team = GambitRemastered.gameSession.getPlayerManager().getPlayerTeam(player);
+            String name = "";
+
+            switch (team) {
+                case SPECTATE -> name = (ChatUtil.format("&r&7&o" + player.getName() + "&7"));
+                case RED -> name = (ChatUtil.format("&r&c" + player.getName() + "&7"));
+                case BLUE -> name = (ChatUtil.format("&r&9" + player.getName() + "&7"));
+                default -> {
+                    return;
+                }
+            }
+
+            player.setPlayerListName(name);
+            player.setDisplayName(name);
         }
 
     }

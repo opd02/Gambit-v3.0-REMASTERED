@@ -37,7 +37,13 @@ public class AbortCommand implements CommandExecutor {
                     p.setHealth(20);
                     p.teleport(ArenaManager.locations.get("LobbySpawn"));
                     p.playSound(p.getLocation(), Sound.ENTITY_VILLAGER_NO, 1, (float) 0.1);
+
+                    GambitRemastered.worldBorderApi.resetWorldBorderToGlobal(p);
                 }
+
+                GambitRemastered.gameSession.getPlayerManager().clearAllTeams();
+                GambitRemastered.gameSession.getMobManager().clearMobSpawnLocations();
+                GambitRemastered.gameSession.getScoreManager().resetAllScores();
                 return true;
 
             } else {
