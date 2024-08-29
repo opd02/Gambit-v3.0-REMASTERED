@@ -80,5 +80,6 @@ public class ArenaManager {
                 gate.update();
             }
         }
+        //TODO make close portal method
     }
 }
