@@ -62,6 +62,12 @@ public final class GambitRemastered extends JavaPlugin {
         }
 
         worldBorderApi = worldBorderApiRegisteredServiceProvider.getProvider();
+        //TODO Make scoreboard/ PAPI to tie into it
+
+
+        //TODO Jump pads to move around
+
+        //TODO investigate getting above 15 orbs? Also XP not matching number in inventory
     }
 
     @Override

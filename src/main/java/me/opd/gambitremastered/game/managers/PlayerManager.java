@@ -8,6 +8,8 @@ import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -68,6 +70,7 @@ public class PlayerManager {
             player.setHealth(20);
             player.setFoodLevel(20);
             player.setLevel(0);
+            player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 1000000, 1, true, false));
 
             playerSoundForPlayers(Sound.ITEM_ARMOR_EQUIP_LEATHER, 0.5f);
         }
@@ -79,14 +82,19 @@ public class PlayerManager {
             assert player != null;
 
             switch (TeamType.getTeam(uuid)) {
-                case BLUE -> player.teleport(ArenaManager.locations.get("BlueSpawn"));
-                case RED -> player.teleport(ArenaManager.locations.get("RedSpawn"));
+                case BLUE -> {
+                    player.teleport(ArenaManager.locations.get("BlueSpawn"));
+                    player.setRespawnLocation(ArenaManager.locations.get("BlueSpawn"), true);
+                }
+                case RED -> {
+                    player.teleport(ArenaManager.locations.get("RedSpawn"));
+                    player.setRespawnLocation(ArenaManager.locations.get("RedSpawn"), true);
+                }
                 case SPECTATE -> {
                     player.teleport(ArenaManager.locations.get("SpectateSpawn"));
                     player.setGameMode(GameMode.SPECTATOR);
                 }
             }
-            player.setRespawnLocation(player.getLocation());
             GambitRemastered.worldBorderApi.setBorder(player, 10, player.getLocation());
         }
         playerSoundForPlayers(Sound.ENTITY_ENDER_DRAGON_FLAP, 0.5f);

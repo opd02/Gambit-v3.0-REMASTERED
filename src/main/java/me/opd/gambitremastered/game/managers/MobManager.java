@@ -79,6 +79,7 @@ public class MobManager {
             redSpawnLocation.getWorld().spawn(redSpawnLocation, Zombie.class);
             redSpawnLocation.getWorld().spawn(redSpawnLocation, Zombie.class);
             redSpawnLocation.getWorld().spawn(redSpawnLocation, Pillager.class);
+            //TODO give them glowing for a few seconds
 
         } else {
             Location blueSpawnLocation = blueMobSpawnLocations.get(random.nextInt(blueMobSpawnLocations.size()));
