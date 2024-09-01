@@ -22,10 +22,10 @@ public class OrbPickUpListener implements Listener {
         Item i = e.getItem();
 
         int in = i.getItemStack().getAmount();
-        if (!(i.getItemStack().getType() == Material.NETHER_STAR)) {
+        if (i.getItemStack().getType() != Material.NETHER_STAR) {
             return;
         }
-        if (p.getLevel() == 15) {
+        if (p.getLevel() >= 15) {
             p.sendMessage(ChatColor.RED + "You are already carrying the maximum number of motes!");
             i.setPickupDelay(20 * 10);
             e.setCancelled(true);

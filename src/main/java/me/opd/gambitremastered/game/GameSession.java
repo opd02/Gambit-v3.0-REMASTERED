@@ -1,5 +1,6 @@
 package me.opd.gambitremastered.game;
 
+import me.opd.gambitremastered.GambitRemastered;
 import me.opd.gambitremastered.game.managers.ArenaManager;
 import me.opd.gambitremastered.game.managers.MobManager;
 import me.opd.gambitremastered.game.managers.PlayerManager;
@@ -52,6 +53,17 @@ public class GameSession {
     }
 
     public void setAllowRespawning(boolean allowRespawning) {
+
         this.allowRespawning = allowRespawning;
+    }
+
+    public void resetGameSession(){
+        arenaManager.closeEndPortals();
+        playerManager.clearAllTeams();
+        playerManager.teleportPlayersToLobby();
+        mobManager.clearMobSpawnLocations();
+        mobManager.clearAllArenaMobs();
+        scoreManager.resetAllScores();
+        this.gameState = GameState.LOBBY;
     }
 }

@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class MobManager {
-    //TODO add the wave spawning mechanics that check for GameState and boss levels active etc.
     private ArrayList<Location> redMobSpawnLocations;
     private ArrayList<Location> blueMobSpawnLocations;
     private boolean allowRedMobSpawning = true;
@@ -73,24 +72,23 @@ public class MobManager {
         Random random = new Random();
         if (teamType == TeamType.RED) {
             Location redSpawnLocation = redMobSpawnLocations.get(random.nextInt(redMobSpawnLocations.size()));
-            redSpawnLocation.getWorld().spawn(redSpawnLocation, Zombie.class);
-            redSpawnLocation.getWorld().spawn(redSpawnLocation, Zombie.class);
-            redSpawnLocation.getWorld().spawn(redSpawnLocation, Zombie.class);
-            redSpawnLocation.getWorld().spawn(redSpawnLocation, Zombie.class);
-            redSpawnLocation.getWorld().spawn(redSpawnLocation, Zombie.class);
-            redSpawnLocation.getWorld().spawn(redSpawnLocation, Pillager.class);
-            //TODO give them glowing for a few seconds
+            spawnWave(redSpawnLocation);
 
         } else {
             Location blueSpawnLocation = blueMobSpawnLocations.get(random.nextInt(blueMobSpawnLocations.size()));
-            blueSpawnLocation.getWorld().spawn(blueSpawnLocation, Zombie.class);
-            blueSpawnLocation.getWorld().spawn(blueSpawnLocation, Zombie.class);
-            blueSpawnLocation.getWorld().spawn(blueSpawnLocation, Zombie.class);
-            blueSpawnLocation.getWorld().spawn(blueSpawnLocation, Zombie.class);
-            blueSpawnLocation.getWorld().spawn(blueSpawnLocation, Zombie.class);
-            blueSpawnLocation.getWorld().spawn(blueSpawnLocation, Pillager.class);
-
+            spawnWave(blueSpawnLocation);
         }
+    }
+    
+    public void spawnWave(Location location){
+        for(int i = 1; i <= 5; i++){
+            Zombie zombie = location.getWorld().spawn(location, Zombie.class);
+            zombie.setAdult();
+            zombie.setCanPickupItems(false);
+            zombie.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 7, 1));
+        }
+
+        location.getWorld().spawn(location, Pillager.class);
     }
 
     public void spawnBoss(TeamType teamType, int bossLevel) {
@@ -135,5 +133,13 @@ public class MobManager {
 
     public void setAllowBlueMobSpawning(boolean allowBlueMobSpawning) {
         this.allowBlueMobSpawning = allowBlueMobSpawning;
+    }
+
+    public void clearAllArenaMobs(){
+        for (Entity e : Bukkit.getServer().getWorlds().getFirst().getEntities()) {
+            if (e.getType() == EntityType.WOLF || e.getType() == EntityType.ZOMBIE || e.getType() == EntityType.PILLAGER || e.getType() == EntityType.RAVAGER || e.getType() == EntityType.WITHER || e.getType() == EntityType.VINDICATOR) {
+                e.remove();
+            }
+        }
     }
 }

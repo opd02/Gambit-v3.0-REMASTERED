@@ -33,8 +33,11 @@ public class MobDropDeathListener implements Listener {
             Player killer = e.getEntity().getKiller();
             TeamType team = GambitRemastered.gameSession.getPlayerManager().getPlayerTeam(killer);
             GambitRemastered.gameSession.getArenaManager().openEndPortal(team);
-            GambitRemastered.gameSession.setAllowRespawning(false);
-            Bukkit.getServer().broadcastMessage(ChatUtil.prefix + ChatUtil.format("&2&lRespawning has now been disabled."));
+
+            if(GambitRemastered.gameSession.isAllowRespawning()){
+                GambitRemastered.gameSession.setAllowRespawning(false);
+                Bukkit.getServer().broadcastMessage(ChatUtil.prefix + ChatUtil.format("&2&lRespawning has now been disabled."));
+            }
         }
     }
 }

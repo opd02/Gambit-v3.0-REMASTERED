@@ -3,6 +3,7 @@ package me.opd.gambitremastered.commands;
 import me.opd.gambitremastered.GambitRemastered;
 import me.opd.gambitremastered.game.GameState;
 import me.opd.gambitremastered.game.managers.ArenaManager;
+import me.opd.gambitremastered.game.managers.PlayerManager;
 import me.opd.gambitremastered.util.ChatUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -21,29 +22,9 @@ public class AbortCommand implements CommandExecutor {
         if (command.getName().equalsIgnoreCase("abort")) {
             if (commandSender.isOp()) {
                 commandSender.sendMessage(ChatUtil.prefix + ChatUtil.format("&cGameplay has been suspended."));
-                GambitRemastered.gameSession.setGameState(GameState.LOBBY);
-                Player playerSender = (Player) commandSender;
+                PlayerManager.playerSoundForPlayers(Sound.ENTITY_VILLAGER_NO, 0.5f);
 
-                for (Entity e : playerSender.getWorld().getEntities()) {
-                    if (e.getType() == EntityType.WOLF || e.getType() == EntityType.ZOMBIE || e.getType() == EntityType.PILLAGER || e.getType() == EntityType.RAVAGER || e.getType() == EntityType.WITHER || e.getType() == EntityType.VINDICATOR) {
-                        e.remove();
-                    }
-                }
-
-                for (Player p : Bukkit.getServer().getOnlinePlayers()) {
-                    p.getInventory().clear();
-                    p.getEquipment().clear();
-                    p.setLevel(0);
-                    p.setHealth(20);
-                    p.teleport(ArenaManager.locations.get("LobbySpawn"));
-                    p.playSound(p.getLocation(), Sound.ENTITY_VILLAGER_NO, 1, (float) 0.1);
-
-                    GambitRemastered.worldBorderApi.resetWorldBorderToGlobal(p);
-                }
-
-                GambitRemastered.gameSession.getPlayerManager().clearAllTeams();
-                GambitRemastered.gameSession.getMobManager().clearMobSpawnLocations();
-                GambitRemastered.gameSession.getScoreManager().resetAllScores();
+                GambitRemastered.gameSession.resetGameSession();
                 return true;
 
             } else {

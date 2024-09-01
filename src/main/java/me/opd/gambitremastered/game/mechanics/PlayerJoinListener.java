@@ -5,6 +5,7 @@ import me.opd.gambitremastered.game.GameState;
 import me.opd.gambitremastered.game.TeamType;
 import me.opd.gambitremastered.game.managers.ArenaManager;
 import me.opd.gambitremastered.util.ChatUtil;
+import org.bukkit.GameMode;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -27,6 +28,7 @@ public class PlayerJoinListener implements Listener {
             player.setHealth(20);
             player.setFoodLevel(20);
             player.setSaturation(20);
+            player.setGameMode(GameMode.ADVENTURE);
 
             player.playSound(player.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1f, 1f);
         } else {

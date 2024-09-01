@@ -63,23 +63,36 @@ public class ArenaManager {
     }
 
     public void openEndPortal(TeamType type) {
-        PlayerManager.playerSoundForPlayers(Sound.BLOCK_END_PORTAL_FRAME_FILL, 1);
+        editPortalStatus(type, true);
+    }
 
-        Location location = ArenaManager.locations.get(type == TeamType.RED ? "RedPortal" : "BluePortal");
-        location.getBlock().setType(Material.END_GATEWAY);
+    public void closeEndPortals(){
+        editPortalStatus(TeamType.BLUE, false);
+        editPortalStatus(TeamType.RED, false);
+    }
+
+    private void editPortalStatus(TeamType team, boolean openOrClose){
+        Location location = ArenaManager.locations.get(team == TeamType.RED ? "RedPortal" : "BluePortal");
+        location.getBlock().setType(Material.AIR);
         double z = location.getZ();
         double y = location.getY();
+
+        if(openOrClose){
+            PlayerManager.playerSoundForPlayers(Sound.BLOCK_END_PORTAL_FRAME_FILL, 1);
+        }
 
         for (double i = z; i >= z - 5; i--) {
             for (double j = y; j <= y + 2; j++) {
                 Location portal = new Location(location.getWorld(), location.getX(), j, i);
-                portal.getBlock().setType(Material.END_GATEWAY);
-                EndGateway gate = (EndGateway) portal.getBlock().getState();
-                gate.setExitLocation(type == TeamType.RED ? ArenaManager.locations.get("BlueSpawn") : ArenaManager.locations.get("RedPortal"));
-                gate.setExactTeleport(true);
-                gate.update();
+                portal.getBlock().setType(openOrClose ? Material.END_GATEWAY : Material.AIR);
+                if(openOrClose){
+                    EndGateway gate = (EndGateway) portal.getBlock().getState();
+                    gate.setExitLocation(team == TeamType.RED ? ArenaManager.locations.get("BlueSpawn") : ArenaManager.locations.get("RedPortal"));
+                    gate.setExactTeleport(true);
+                    gate.update();
+                }
             }
         }
-        //TODO make close portal method
+
     }
 }

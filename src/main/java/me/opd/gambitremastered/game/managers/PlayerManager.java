@@ -18,6 +18,7 @@ import java.util.UUID;
 public class PlayerManager {
 
     private HashMap<UUID, TeamType> players = new HashMap<>();
+    private ArrayList<UUID> slimeLaunching = new ArrayList<>();
 
     public HashMap<UUID, TeamType> getPlayers() {
         return players;
@@ -138,4 +139,19 @@ public class PlayerManager {
         return team;
     }
 
+    public void teleportPlayersToLobby(){
+        for (Player p : Bukkit.getServer().getOnlinePlayers()) {
+            p.getInventory().clear();
+            p.getEquipment().clear();
+            p.setLevel(0);
+            p.setHealth(20);
+            p.teleport(ArenaManager.locations.get("LobbySpawn"));
+
+            GambitRemastered.worldBorderApi.resetWorldBorderToGlobal(p);
+        }
+    }
+
+    public ArrayList<UUID> getSlimeLaunching() {
+        return slimeLaunching;
+    }
 }

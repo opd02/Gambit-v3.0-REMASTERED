@@ -10,6 +10,7 @@ import me.opd.gambitremastered.prizes.PrizeManager;
 import me.opd.gambitremastered.prizes.powerups.FreezeMobs;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Slime;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -44,6 +45,9 @@ public final class GambitRemastered extends JavaPlugin {
         Bukkit.getServer().getPluginManager().registerEvents(new RemoveFireworkDamageListener(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new PowerupDropListener(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new FreezeMobs(null), this);
+        Bukkit.getServer().getPluginManager().registerEvents(new EntityDamageByWolfListener(), this);
+        Bukkit.getServer().getPluginManager().registerEvents(new PlayerDeathListener(), this);
+        Bukkit.getServer().getPluginManager().registerEvents(new SlimeLauncherListeners(), this);
 
 
         gameSession = new GameSession();

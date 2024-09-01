@@ -26,7 +26,7 @@ public class ScoreManager {
     private int secondBossAmount = 35;
     private final int winningScore = 50;
 
-    //TODO Add a check for winning and make winning animation/map reset (may want to consolidate some things used in /abort)
+    //TODO Add a check for winning and make winning animation/map reset
 
     public ScoreManager() {
         this.blueScore = 0;
@@ -144,5 +144,7 @@ public class ScoreManager {
         this.redBossLevel = 0;
     }
     //TODO make the scores viewable in scoreboard (PAPI?)
+
+    //TODO Make winning animation/more grand
 
 }

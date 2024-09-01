@@ -1,6 +1,7 @@
 package me.opd.gambitremastered.game.mechanics;
 
 import me.opd.gambitremastered.GambitRemastered;
+import me.opd.gambitremastered.game.TeamType;
 import me.opd.gambitremastered.util.ChatUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -19,10 +20,11 @@ public class PlayerRespawnListener implements Listener {
     @EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent e) {
         if (!GambitRemastered.gameSession.isAllowRespawning()) {
-            e.getPlayer().setGameMode(GameMode.SPECTATOR);
-            e.getPlayer().sendMessage(ChatUtil.prefix + ChatUtil.format("&c&lYou have lost the game!"));
-            e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.ENTITY_VILLAGER_NO, 0.5f, 0.5f);
-            e.getPlayer().getInventory().clear();
+            Player p = e.getPlayer();
+            p.setGameMode(GameMode.SPECTATOR);
+            p.sendMessage(ChatUtil.prefix + ChatUtil.format("&c&lYou have lost the game!"));
+            p.playSound(p.getLocation(), Sound.ENTITY_VILLAGER_NO, 0.5f, 0.5f);
+            p.getInventory().clear();
             return;
         }
 
