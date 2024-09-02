@@ -13,6 +13,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 public class PlayerManager {
@@ -97,6 +98,7 @@ public class PlayerManager {
                 }
             }
             GambitRemastered.worldBorderApi.setBorder(player, 10, player.getLocation());
+            player.setGameMode(GameMode.ADVENTURE);
         }
         playerSoundForPlayers(Sound.ENTITY_ENDER_DRAGON_FLAP, 0.5f);
     }
@@ -129,6 +131,16 @@ public class PlayerManager {
         return team;
     }
 
+    public ArrayList<Player> getTeamPlayers(TeamType player) {
+        ArrayList<Player> team = new ArrayList<>();
+        for (UUID uuid : players.keySet()) {
+            if (players.get(uuid) == player) {
+                team.add(Bukkit.getPlayer(uuid));
+            }
+        }
+        return team;
+    }
+
     public ArrayList<Player> getOppositeTeamPlayers(Player player) {
         ArrayList<Player> team = new ArrayList<>();
         for (UUID uuid : players.keySet()) {
@@ -139,13 +151,16 @@ public class PlayerManager {
         return team;
     }
 
-    public void teleportPlayersToLobby(){
+    public void teleportPlayersToLobby() {
         for (Player p : Bukkit.getServer().getOnlinePlayers()) {
             p.getInventory().clear();
             p.getEquipment().clear();
             p.setLevel(0);
             p.setHealth(20);
             p.teleport(ArenaManager.locations.get("LobbySpawn"));
+            p.getInventory().addItem(ItemUtil.getItem("&e&lTeam Selector &7(Right Click)", Material.COMPASS, 1,
+                    new ArrayList<>(List.of("&fRight click this item to select", "&fa team to join")), false));
+
 
             GambitRemastered.worldBorderApi.resetWorldBorderToGlobal(p);
         }

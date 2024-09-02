@@ -11,8 +11,18 @@ public class PlayerDeathListener implements Listener {
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent e) {
         Player p = e.getEntity();
-        if(!GambitRemastered.gameSession.isAllowRespawning()){
+        TeamType deadPlayerTeam = GambitRemastered.gameSession.getPlayerManager().getPlayerTeam(p);
+        if (!GambitRemastered.gameSession.isAllowRespawning()) {
             GambitRemastered.gameSession.getPlayerManager().addPlayerToTeam(p, TeamType.SPECTATE);
+        }
+
+        if (p.getKiller() != null) {
+            assert p.getKiller() != null;
+            TeamType killerTeam = GambitRemastered.gameSession.getPlayerManager().getPlayerTeam(p.getKiller());
+
+            if (GambitRemastered.gameSession.getPlayerManager().getTeamPlayers(deadPlayerTeam).isEmpty()) {
+                GambitRemastered.gameSession.getScoreManager().triggerGameWin(killerTeam);
+            }
         }
     }
 }

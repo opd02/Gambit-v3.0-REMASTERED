@@ -19,11 +19,14 @@ public class MobManager {
     private boolean allowRedMobSpawning = true;
     private boolean allowBlueMobSpawning = true;
     private BukkitTask stask = null;
+    private BukkitTask timerTask = null;
     private int high = 200;
+    public int timeUntilNextWave;
 
     public MobManager() {
         redMobSpawnLocations = new ArrayList<>();
         blueMobSpawnLocations = new ArrayList<>();
+        this.timeUntilNextWave = 0;
     }
 
     public void updateMobSpawnLocations(World world) {
@@ -46,6 +49,7 @@ public class MobManager {
     }
 
     public void startMobSpawning() {
+        this.timeUntilNextWave = 46;
         stask = Bukkit.getScheduler().runTaskTimer(GambitRemastered.instance, () -> {
             if (high != 0) {
                 if (!GambitRemastered.gameSession.getGameState().equals(GameState.IN_GAME)) {
@@ -66,6 +70,17 @@ public class MobManager {
                 stask.cancel();
             }
         }, 0, 900L);
+
+        timerTask = Bukkit.getScheduler().runTaskTimer(GambitRemastered.instance, () -> {
+            if (!GambitRemastered.gameSession.getGameState().equals(GameState.IN_GAME)) {
+                timerTask.cancel();
+            }
+            if (timeUntilNextWave > 1) {
+                this.timeUntilNextWave = timeUntilNextWave - 1;
+            } else {
+                this.timeUntilNextWave = 45;
+            }
+        }, 0, 20);
     }
 
     private void spawnMobWave(TeamType teamType) {
@@ -79,13 +94,13 @@ public class MobManager {
             spawnWave(blueSpawnLocation);
         }
     }
-    
-    public void spawnWave(Location location){
-        for(int i = 1; i <= 5; i++){
+
+    public void spawnWave(Location location) {
+        for (int i = 1; i <= 5; i++) {
             Zombie zombie = location.getWorld().spawn(location, Zombie.class);
             zombie.setAdult();
             zombie.setCanPickupItems(false);
-            zombie.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 7, 1));
+            zombie.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 7 * 20, 1));
         }
 
         location.getWorld().spawn(location, Pillager.class);
@@ -135,11 +150,22 @@ public class MobManager {
         this.allowBlueMobSpawning = allowBlueMobSpawning;
     }
 
-    public void clearAllArenaMobs(){
+    public void clearAllArenaMobs() {
         for (Entity e : Bukkit.getServer().getWorlds().getFirst().getEntities()) {
             if (e.getType() == EntityType.WOLF || e.getType() == EntityType.ZOMBIE || e.getType() == EntityType.PILLAGER || e.getType() == EntityType.RAVAGER || e.getType() == EntityType.WITHER || e.getType() == EntityType.VINDICATOR) {
                 e.remove();
             }
         }
+    }
+
+    public ArrayList<Location> getAllSpawnLocations() {
+        ArrayList<Location> spawnLocations = new ArrayList<>();
+        spawnLocations.addAll(this.blueMobSpawnLocations);
+        spawnLocations.addAll(this.redMobSpawnLocations);
+        return spawnLocations;
+    }
+
+    public int getTimeUntilNextWave() {
+        return timeUntilNextWave;
     }
 }

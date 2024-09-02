@@ -1,13 +1,14 @@
 package me.opd.gambitremastered.game.managers;
 
 import me.opd.gambitremastered.GambitRemastered;
+import me.opd.gambitremastered.game.GameState;
 import me.opd.gambitremastered.game.TeamType;
 import me.opd.gambitremastered.util.ChatUtil;
 import me.opd.gambitremastered.util.ItemUtil;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
+import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.meta.FireworkMeta;
 
 public class ScoreManager {
 
@@ -25,8 +26,6 @@ public class ScoreManager {
     private int firstBossAmount = 15;
     private int secondBossAmount = 35;
     private final int winningScore = 50;
-
-    //TODO Add a check for winning and make winning animation/map reset
 
     public ScoreManager() {
         this.blueScore = 0;
@@ -143,8 +142,34 @@ public class ScoreManager {
         this.blueBossLevel = 0;
         this.redBossLevel = 0;
     }
-    //TODO make the scores viewable in scoreboard (PAPI?)
 
-    //TODO Make winning animation/more grand
+    public void triggerGameWin(TeamType team) {
+        GambitRemastered.gameSession.setGameState(GameState.ENDGAME);
+        for (Player p : Bukkit.getServer().getOnlinePlayers()) {
+            p.sendTitle(ChatUtil.format((team.equals(TeamType.RED) ? "&c&lRED" : "&9&lBLUE") + " TEAM WINS"), ChatUtil.format(""));
+        }
+        PlayerManager.playerSoundForPlayers(Sound.UI_TOAST_CHALLENGE_COMPLETE, 1);
+        for (Location location : GambitRemastered.gameSession.getMobManager().getAllSpawnLocations()) {
 
+            Firework fw = location.getWorld().spawn(location, Firework.class);
+            FireworkMeta fm = fw.getFireworkMeta();
+            fm.setPower(1);
+            fm.addEffect(FireworkEffect.builder().withColor(team.equals(TeamType.RED) ? Color.RED : Color.BLUE)
+                    .withFade(Color.GREEN).with(FireworkEffect.Type.BALL_LARGE).build());
+            fw.setFireworkMeta(fm);
+//            fw.detonate();
+
+        }
+        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(GambitRemastered.instance, () -> {
+            GambitRemastered.gameSession.resetGameSession();
+        }, 20 * 5L);
+    }
+
+    public int getBlueScore() {
+        return blueScore;
+    }
+
+    public int getRedScore() {
+        return redScore;
+    }
 }

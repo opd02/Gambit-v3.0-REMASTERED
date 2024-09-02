@@ -1,6 +1,7 @@
 package me.opd.gambitremastered.commands;
 
 import me.opd.gambitremastered.GambitRemastered;
+import me.opd.gambitremastered.game.TeamType;
 import me.opd.gambitremastered.prizes.Prize;
 import me.opd.gambitremastered.util.ChatUtil;
 import me.opd.gambitremastered.util.ItemUtil;
@@ -29,6 +30,9 @@ public class TokenCommand implements CommandExecutor {
                     for (Prize prize : GambitRemastered.prizeManager.getPossiblePrizes()) {
                         player.getInventory().addItem(prize.getItem());
                     }
+
+                    GambitRemastered.gameSession.getScoreManager().triggerGameWin(TeamType.RED);
+
                     return true;
                 }
                 amount = Integer.parseInt(args[0]);

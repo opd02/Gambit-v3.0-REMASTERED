@@ -2,15 +2,16 @@ package me.opd.gambitremastered;
 
 import com.github.yannicklamprecht.worldborder.api.WorldBorderApi;
 import me.opd.gambitremastered.commands.*;
+import me.opd.gambitremastered.commands.gteamGUI.MenuListener;
 import me.opd.gambitremastered.game.GameSession;
 import me.opd.gambitremastered.game.mechanics.*;
 import me.opd.gambitremastered.prizes.PowerupDropListener;
 import me.opd.gambitremastered.prizes.PrizeCrateInteractListener;
 import me.opd.gambitremastered.prizes.PrizeManager;
 import me.opd.gambitremastered.prizes.powerups.FreezeMobs;
+import me.opd.gambitremastered.util.teamBankedPapi;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Slime;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -48,6 +49,8 @@ public final class GambitRemastered extends JavaPlugin {
         Bukkit.getServer().getPluginManager().registerEvents(new EntityDamageByWolfListener(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new PlayerDeathListener(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new SlimeLauncherListeners(), this);
+        Bukkit.getServer().getPluginManager().registerEvents(new MenuListener(), this);
+        Bukkit.getServer().getPluginManager().registerEvents(new LobbyHungerEvent(), this);
 
 
         gameSession = new GameSession();
@@ -56,8 +59,11 @@ public final class GambitRemastered extends JavaPlugin {
 
         prizeManager = new PrizeManager();
 
-
+//        worldBorderApi = new PersistenceWrapper(this, new Border());
+//        this.getServer().getServicesManager().register(WorldBorderApi.class, worldBorderApi, this, ServicePriority.High);
+//        RegisteredServiceProvider<WorldBorderApi> worldBorderApiRegisteredServiceProvider = getServer().getServicesManager().getRegistration(WorldBorderApi.class);
         RegisteredServiceProvider<WorldBorderApi> worldBorderApiRegisteredServiceProvider = getServer().getServicesManager().getRegistration(WorldBorderApi.class);
+
 
         if (worldBorderApiRegisteredServiceProvider == null) {
             getLogger().info("API not found");
@@ -66,10 +72,9 @@ public final class GambitRemastered extends JavaPlugin {
         }
 
         worldBorderApi = worldBorderApiRegisteredServiceProvider.getProvider();
+
+        new teamBankedPapi().register();
         //TODO Make scoreboard/ PAPI to tie into it
-
-
-        //TODO Jump pads to move around
 
         //TODO investigate getting above 15 orbs? Also XP not matching number in inventory
     }
