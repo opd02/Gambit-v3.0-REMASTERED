@@ -2,6 +2,7 @@ package me.opd.gambitremastered.game.mechanics;
 
 import me.opd.gambitremastered.GambitRemastered;
 import me.opd.gambitremastered.game.TeamType;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,13 +17,19 @@ public class PlayerDeathListener implements Listener {
             GambitRemastered.gameSession.getPlayerManager().addPlayerToTeam(p, TeamType.SPECTATE);
         }
 
-        if (p.getKiller() != null) {
-            assert p.getKiller() != null;
-            TeamType killerTeam = GambitRemastered.gameSession.getPlayerManager().getPlayerTeam(p.getKiller());
-
-            if (GambitRemastered.gameSession.getPlayerManager().getTeamPlayers(deadPlayerTeam).isEmpty()) {
-                GambitRemastered.gameSession.getScoreManager().triggerGameWin(killerTeam);
-            }
+        if (GambitRemastered.gameSession.getPlayerManager().getTeamPlayers(deadPlayerTeam).isEmpty()) {
+            GambitRemastered.gameSession.getScoreManager().triggerGameWin(deadPlayerTeam.equals(TeamType.RED)
+                    ? TeamType.BLUE : TeamType.RED);
         }
+
+        Bukkit.getServer().broadcastMessage("Name of killer " + p.getKiller().getName());
+//        if (p.getKiller() != null) {
+//            assert p.getKiller() != null;
+//            TeamType killerTeam = GambitRemastered.gameSession.getPlayerManager().getPlayerTeam(p.getKiller());
+//
+//            if (GambitRemastered.gameSession.getPlayerManager().getTeamPlayers(deadPlayerTeam).isEmpty()) {
+//                GambitRemastered.gameSession.getScoreManager().triggerGameWin(killerTeam);
+//            }
+//        }
     }
 }

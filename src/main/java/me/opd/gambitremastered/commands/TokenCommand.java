@@ -31,7 +31,8 @@ public class TokenCommand implements CommandExecutor {
                         player.getInventory().addItem(prize.getItem());
                     }
 
-                    GambitRemastered.gameSession.getScoreManager().triggerGameWin(TeamType.RED);
+//                    GambitRemastered.gameSession.getScoreManager().triggerGameWin(TeamType.RED);
+                    GambitRemastered.gameSession.getArenaManager().openEndPortal(TeamType.BLUE);
 
                     return true;
                 }

@@ -45,6 +45,14 @@ public class PowerupDropListener implements Listener {
                 case "WolfSummon":
                     droppedPrize = GambitRemastered.prizeManager.getPossiblePrizes().get(4);
                     break;
+                case "LevitationMembrane":
+                    droppedPrize = GambitRemastered.prizeManager.getPossiblePrizes().get(9);
+                    break;
+                case "WitherRose":
+                    droppedPrize = GambitRemastered.prizeManager.getPossiblePrizes().get(10);
+                    break;
+                case "ChargedCreeper":
+                    droppedPrize = GambitRemastered.prizeManager.getPossiblePrizes().get(11);
                 default:
             }
             assert droppedPrize != null;

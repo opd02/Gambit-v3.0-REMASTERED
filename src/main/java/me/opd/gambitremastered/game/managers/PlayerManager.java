@@ -158,6 +158,8 @@ public class PlayerManager {
             p.setLevel(0);
             p.setHealth(20);
             p.teleport(ArenaManager.locations.get("LobbySpawn"));
+            p.setGameMode(GameMode.ADVENTURE);
+            clearAllTeams();
             p.getInventory().addItem(ItemUtil.getItem("&e&lTeam Selector &7(Right Click)", Material.COMPASS, 1,
                     new ArrayList<>(List.of("&fRight click this item to select", "&fa team to join")), false));
 

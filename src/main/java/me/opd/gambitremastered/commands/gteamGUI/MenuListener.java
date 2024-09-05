@@ -47,6 +47,8 @@ public class MenuListener implements Listener {
             new GTeamMenu().displayTo(player);
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 2, 2f);
 //            player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 2, 2f);
+        } else if (event.getItem() != null && event.getItem().getType().equals(Material.CREEPER_SPAWN_EGG)) {
+            event.setCancelled(true);
         }
     }
 }

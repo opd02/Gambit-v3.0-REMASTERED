@@ -6,7 +6,7 @@
 
     <groupId>me.opd</groupId>
     <artifactId>GambitRemastered</artifactId>
-    <version>0.1-BETA</version>
+    <version>0.2-BETA</version>
     <packaging>jar</packaging>
 
     <name>GambitRemastered</name>

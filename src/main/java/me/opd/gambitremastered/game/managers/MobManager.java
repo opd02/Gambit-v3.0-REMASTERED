@@ -152,7 +152,10 @@ public class MobManager {
 
     public void clearAllArenaMobs() {
         for (Entity e : Bukkit.getServer().getWorlds().getFirst().getEntities()) {
-            if (e.getType() == EntityType.WOLF || e.getType() == EntityType.ZOMBIE || e.getType() == EntityType.PILLAGER || e.getType() == EntityType.RAVAGER || e.getType() == EntityType.WITHER || e.getType() == EntityType.VINDICATOR) {
+            if (e.getType() == EntityType.WOLF || e.getType() == EntityType.ZOMBIE ||
+                    e.getType() == EntityType.PILLAGER || e.getType() == EntityType.RAVAGER ||
+                    e.getType() == EntityType.WITHER || e.getType() == EntityType.VINDICATOR ||
+                    e.getType() == EntityType.ARROW || e.getType() == EntityType.ITEM) {
                 e.remove();
             }
         }

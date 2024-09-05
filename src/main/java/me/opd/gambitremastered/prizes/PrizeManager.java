@@ -25,11 +25,11 @@ public class PrizeManager {
                         new ArrayList<>(List.of("&7Drop this item to give your entire", "&7team a speed boost!")), false), "Prize",
                 "SpeedBoost")));
 
-        possiblePrizes.add(new ArmorUpgradeModule(ItemUtil.NBTStamp(ItemUtil.getItem("&b&lArmor Upgrade Module", Material.DIAMOND, 1,
+        possiblePrizes.add(new ArmorUpgradeModule(ItemUtil.NBTStamp(ItemUtil.getItem("&5&lArmor Upgrade Module", Material.DIAMOND, 1,
                         new ArrayList<>(List.of("&7Drop this item to upgrade your", "&7armor material by 1 type")), false), "Prize",
                 "ArmorUpgradeModule")));
 
-        possiblePrizes.add(new WeaponUpgradeModule(ItemUtil.NBTStamp(ItemUtil.getItem("&5&lWeapon Upgrade Module", Material.ANVIL, 1,
+        possiblePrizes.add(new WeaponUpgradeModule(ItemUtil.NBTStamp(ItemUtil.getItem("&3&lWeapon Upgrade Module", Material.ANVIL, 1,
                         new ArrayList<>(List.of("&7Drop this item to upgrade your", "&7weapon material by 1 type")), false), "Prize",
                 "WeaponUpgradeModule")));
 
@@ -51,6 +51,18 @@ public class PrizeManager {
         possiblePrizes.add(new TeamSlowDown(ItemUtil.NBTStamp(ItemUtil.getItem("&2&lTeam Slow Down", Material.TURTLE_SCUTE, 1,
                         new ArrayList<>(List.of("&7Drop this item to give your opponents", "&7a massive reduction in speed!")), false), "Prize",
                 "TeamSlowDown")));
+
+        possiblePrizes.add(new LevitationMembrane(ItemUtil.NBTStamp(ItemUtil.getItem("&b&lLevitation", Material.PHANTOM_MEMBRANE, 1,
+                        new ArrayList<>(List.of("&7Drop this item to give your enemies", "&7levitation!")), false), "Prize",
+                "LevitationMembrane")));
+
+        possiblePrizes.add(new WitherRose(ItemUtil.NBTStamp(ItemUtil.getItem("&4&lWither Rose", Material.WITHER_ROSE, 1,
+                        new ArrayList<>(List.of("&7Drop this item to give your enemies", "&7the wither effect!")), false), "Prize",
+                "WitherRose")));
+
+        possiblePrizes.add(new ChargedCreeperEgg(ItemUtil.NBTStamp(ItemUtil.getItem("&2&lCharged Creeper", Material.CREEPER_SPAWN_EGG, 1,
+                new ArrayList<>(List.of("&7Drop this item to spawn a charged", "&7creeper to explode nearby mobs!")),
+                false), "Prize", "ChargedCreeper")));
     }
 
     public void givePlayerRandomPrize(Player player) {
