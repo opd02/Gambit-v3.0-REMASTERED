@@ -21,6 +21,8 @@ public class GameSession {
         this.mobManager = new MobManager();
         this.arenaManager = new ArenaManager();
         this.allowRespawning = true;
+
+        resetGameSession();
     }
 
     public GameState getGameState() {
